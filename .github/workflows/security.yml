@@ -1,0 +1,28 @@
+name: Security audit
+
+on:
+  # Har day 00:00 UTC par security scan
+  schedule:
+    - cron: '0 0 * * *'
+
+  # Sirf tab run hoga jab Cargo.toml ya Cargo.lock change ho
+  push:
+    paths:
+      - '**/Cargo.toml'
+      - '**/Cargo.lock'
+
+jobs:
+  security_audit:
+    # GitHub ek temporary Ubuntu machine provide karega
+    runs-on: ubuntu-latest
+
+    steps:
+      # Repository ka code runner machine par checkout karta hai
+      - uses: actions/checkout@v3
+
+      # cargo-deny install karta hai
+      - uses: taiki-e/install-action@cargo-deny
+
+      # Rust dependencies mein known security advisories check karta hai
+      - name: Scan for vulnerabilities
+        run: cargo deny check advisories
