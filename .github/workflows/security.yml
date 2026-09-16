@@ -18,7 +18,7 @@ jobs:
 
     steps:
       # Repository ka code runner machine par checkout karta hai
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       # cargo-deny install karta hai
       - uses: taiki-e/install-action@cargo-deny
